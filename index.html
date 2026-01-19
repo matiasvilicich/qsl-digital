@@ -82,6 +82,11 @@ h2,h3{text-align:center;font-family:'Great Maker', cursive}
 </div>
 
 <script>
+function horaSinSegundos(t){
+  if(!t) return "";
+  return t.substring(0,5);
+}
+
 function getUsers(){return JSON.parse(localStorage.getItem("qslUsers")||"{}");}
 function register(){
   const l=licLogin.value,p=passLogin.value;
@@ -118,7 +123,7 @@ function addManual(){
     actividad: actividad.value.trim(),
     op: op_call.value || "",
     dx: dx_call.value,
-    date: m_date.value,            // ← CON GUIONES
+    date: m_date.value,
     time: m_time.value,
     band: m_band.value,
     mode: m_mode.value,
@@ -146,7 +151,7 @@ function parseADIF(t){
         actividad: actividad.value.trim(),
         op: g("STATION_CALLSIGN"),
         dx: g("CALL"),
-        date: g("QSO_DATE").replace(/(\d{4})(\d{2})(\d{2})/,"$1-$2-$3"), // ← CON GUIONES
+        date: g("QSO_DATE").replace(/(\d{4})(\d{2})(\d{2})/,"$1-$2-$3"),
         time: g("TIME_ON").replace(/(..)(..)/,"$1:$2"),
         band: g("BAND"),
         mode: g("MODE"),
@@ -198,7 +203,7 @@ function drawCanvas(x,c,q,img){
   x.fillText("PARA: "+q.dx,bx+20,by+130);
 
   x.font="32px 'Great Maker', cursive";
-  x.fillText("Fecha: "+q.date+" Hora: "+q.time,bx+20,by+190);
+  x.fillText("Fecha: "+q.date+" Hora: "+horaSinSegundos(q.time),bx+20,by+190);
   x.fillText("Banda: "+q.band+" Modo: "+q.mode,bx+20,by+245);
   x.fillText("RST S: "+q.rst_s+" RST R: "+q.rst_r,bx+20,by+300);
 }
@@ -224,5 +229,3 @@ function drawQSL(q){
 
 </body>
 </html>
-
-
